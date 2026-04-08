@@ -4,9 +4,11 @@ import PdfUpload from './components/PdfUpload';
 
 function App() {
   const [uploadedFiles, setUploadedFiles] = useState([]);
+  const [activeFile, setActiveFile] = useState(null);
 
   function handleUploadComplete(uploadInfo) {
     setUploadedFiles((prev) => [uploadInfo.filename, ...prev]);
+    setActiveFile(uploadInfo.filename);
   }
 
   return (
@@ -31,7 +33,12 @@ function App() {
           ) : (
             <ul className="file-list">
               {uploadedFiles.map((name, idx) => (
-                <li key={`${name}-${idx}`} title={name}>
+                <li
+                  key={`${name}-${idx}`}
+                  title={name}
+                  className={activeFile === name ? 'active' : ''}
+                  onClick={() => setActiveFile(name)}
+                >
                   {name}
                 </li>
               ))}
@@ -41,7 +48,7 @@ function App() {
       </aside>
 
       <section className="chat-main">
-        <ChatWindow />
+        <ChatWindow activeFile={activeFile} uploadedFiles={uploadedFiles} />
       </section>
     </main>
   );

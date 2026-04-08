@@ -9,10 +9,19 @@ class UploadResponse(BaseModel):
     total_chunks_added: int
 
 
+class UploadUrlRequest(BaseModel):
+    url: str = Field(..., min_length=8)
+
+
 class AskRequest(BaseModel):
     question: str = Field(..., min_length=2)
     session_id: str = Field(default="default")
     k: Optional[int] = Field(default=None, ge=1, le=10)
+    source_filter: Optional[str] = Field(default=None)
+    mode: str = Field(default="original")
+    role: str = Field(default="default")
+    compare_sources: Optional[List[str]] = Field(default=None)
+    stream: bool = Field(default=False)
 
 
 class SourceChunk(BaseModel):

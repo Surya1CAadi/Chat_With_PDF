@@ -1,18 +1,18 @@
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap');
 
 :root {
-  --bg: #f7f7f8;
-  --surface: #ffffff;
-  --surface-soft: #f3f4f6;
-  --sidebar: #eceef1;
-  --ink: #1f2937;
-  --muted: #6b7280;
-  --border: #e5e7eb;
-  --accent: #111827;
-  --assistant-bubble: #f3f4f6;
-  --user-bubble: #dbeafe;
-  --danger: #b91c1c;
-  --success: #166534;
+  --bg: #343541;
+  --surface: #444654;
+  --surface-soft: #40414f;
+  --sidebar: #202123;
+  --ink: #ececf1;
+  --muted: #a6a7b3;
+  --border: #565869;
+  --accent: #19c37d;
+  --assistant-bubble: #444654;
+  --user-bubble: #3a3b47;
+  --danger: #f87171;
+  --success: #34d399;
 }
 
 * {
@@ -29,9 +29,7 @@ body {
   margin: 0;
   font-family: 'IBM Plex Sans', sans-serif;
   color: var(--ink);
-  background:
-    radial-gradient(circle at 10% 0%, rgba(255, 255, 255, 0.85), transparent 45%),
-    linear-gradient(180deg, #f8fafc, #eef2f7);
+  background: var(--bg);
 }
 
 button,
@@ -53,7 +51,7 @@ button {
 
 .chat-sidebar {
   border-right: 1px solid var(--border);
-  background: linear-gradient(180deg, var(--sidebar), #e7ebf0);
+  background: var(--sidebar);
   padding: 1rem;
   display: grid;
   grid-template-rows: auto auto 1fr;
@@ -65,12 +63,13 @@ button {
   margin: 0;
   font-size: 1.05rem;
   letter-spacing: -0.01em;
+  color: #f8fafc;
 }
 
 .sidebar-brand p {
   margin: 0.25rem 0 0;
   font-size: 0.85rem;
-  color: var(--muted);
+  color: #cbd5e1;
 }
 
 .sidebar-block {
@@ -79,9 +78,9 @@ button {
 
 .sidebar-files {
   min-height: 0;
-  border: 1px solid rgba(17, 24, 39, 0.06);
+  border: 1px solid var(--border);
   border-radius: 14px;
-  background: rgba(255, 255, 255, 0.58);
+  background: rgba(255, 255, 255, 0.03);
   padding: 0.75rem;
   display: flex;
   flex-direction: column;
@@ -97,6 +96,7 @@ button {
 .files-header h3 {
   margin: 0;
   font-size: 0.9rem;
+  color: var(--ink);
 }
 
 .files-header span {
@@ -108,8 +108,9 @@ button {
   border-radius: 999px;
   font-size: 0.8rem;
   font-weight: 700;
-  background: #fff;
+  background: rgba(255, 255, 255, 0.06);
   border: 1px solid var(--border);
+  color: var(--ink);
 }
 
 .file-list {
@@ -124,12 +125,19 @@ button {
 .file-list li {
   padding: 0.55rem 0.6rem;
   border-radius: 10px;
-  background: #fff;
+  background: rgba(255, 255, 255, 0.04);
   border: 1px solid var(--border);
   font-size: 0.82rem;
+  color: var(--ink);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.file-list li.active {
+  border-color: rgba(25, 195, 125, 0.6);
+  background: rgba(25, 195, 125, 0.2);
+  color: #d1fae5;
 }
 
 .chat-main {
@@ -137,16 +145,33 @@ button {
   display: flex;
   justify-content: center;
   overflow: hidden;
+  background: var(--bg);
 }
 
 .chat-panel {
   width: 100%;
-  max-width: 920px;
+  max-width: 980px;
   height: 100vh;
   display: grid;
-  grid-template-rows: auto 1fr auto;
+  grid-template-rows: auto 1fr;
   padding: 0.9rem 1rem 1rem;
   gap: 0.75rem;
+}
+
+.chat-body {
+  min-height: 0;
+  height: 100%;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0.7rem;
+}
+
+.chat-thread {
+  min-height: 0;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
 }
 
 .chat-topbar {
@@ -159,17 +184,20 @@ button {
 
 .chat-topbar h2 {
   margin: 0;
-  font-size: 1.02rem;
+  font-size: 1.05rem;
   letter-spacing: -0.01em;
 }
 
 .chat-messages {
   min-height: 0;
+  flex: 1;
+  height: 100%;
   overflow: auto;
   display: grid;
   align-content: start;
   gap: 0.7rem;
   padding: 0.25rem;
+  border-radius: 12px;
 }
 
 .empty-chat {
@@ -194,7 +222,7 @@ button {
 
 .chip-button {
   border: 1px solid var(--border);
-  background: #fff;
+  background: var(--surface-soft);
   color: var(--ink);
   border-radius: 12px;
   padding: 0.7rem 0.75rem;
@@ -203,24 +231,26 @@ button {
 }
 
 .chip-button:hover:not(:disabled) {
-  background: var(--surface-soft);
+  background: #4a4b5c;
 }
 
 .chat-bubble {
   max-width: min(92%, 760px);
-  border-radius: 14px;
-  padding: 0.7rem 0.8rem;
+  border-radius: 16px;
+  padding: 0.8rem 0.9rem;
   border: 1px solid var(--border);
 }
 
 .chat-bubble.assistant {
   background: var(--assistant-bubble);
   justify-self: start;
+  box-shadow: none;
 }
 
 .chat-bubble.user {
   background: var(--user-bubble);
   justify-self: end;
+  border-color: #62657a;
 }
 
 .bubble-meta {
@@ -247,8 +277,8 @@ button {
   letter-spacing: 0.04em;
   padding: 0.15rem 0.45rem;
   border-radius: 999px;
-  border: 1px solid #cbd5e1;
-  background: rgba(255, 255, 255, 0.8);
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.08);
 }
 
 .sources {
@@ -258,7 +288,18 @@ button {
 }
 
 .sources small {
-  color: #4b5563;
+  color: var(--muted);
+}
+
+.reply-actions {
+  display: flex;
+  gap: 0.45rem;
+  margin-top: 0.65rem;
+}
+
+.reply-action-btn {
+  padding: 0.35rem 0.55rem;
+  font-size: 0.76rem;
 }
 
 .typing-indicator {
@@ -266,7 +307,7 @@ button {
   gap: 0.3rem;
   padding: 0.5rem 0.6rem;
   border-radius: 999px;
-  background: var(--assistant-bubble);
+  background: var(--surface-soft);
   border: 1px solid var(--border);
 }
 
@@ -274,7 +315,7 @@ button {
   width: 0.44rem;
   height: 0.44rem;
   border-radius: 999px;
-  background: #6b7280;
+  background: var(--muted);
   animation: pulse 1.2s infinite ease-in-out;
 }
 
@@ -287,11 +328,15 @@ button {
 }
 
 .chat-composer {
+  position: sticky;
+  bottom: 0;
+  z-index: 5;
   padding-top: 0.2rem;
+  background: linear-gradient(180deg, rgba(52, 53, 65, 0), rgba(52, 53, 65, 0.92) 28%, rgba(52, 53, 65, 1));
 }
 
 .composer-input-wrap {
-  background: #fff;
+  background: var(--surface);
   border: 1px solid var(--border);
   border-radius: 16px;
   padding: 0.65rem;
@@ -306,6 +351,11 @@ button {
   min-height: 68px;
   width: 100%;
   background: transparent;
+  color: var(--ink);
+}
+
+.composer-input-wrap textarea::placeholder {
+  color: var(--muted);
 }
 
 .composer-footer {
@@ -313,6 +363,7 @@ button {
   align-items: center;
   justify-content: space-between;
   gap: 0.65rem;
+  flex-wrap: wrap;
 }
 
 .composer-footer small {
@@ -320,11 +371,31 @@ button {
   font-size: 0.8rem;
 }
 
+.composer-mode {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin-right: auto;
+}
+
+.composer-mode span {
+  color: var(--muted);
+  font-size: 0.8rem;
+}
+
+.composer-mode select {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: #3d3f4d;
+  color: var(--ink);
+  padding: 0.4rem 0.5rem;
+}
+
 .composer-footer button {
   border-radius: 10px;
   padding: 0.56rem 0.86rem;
   background: var(--accent);
-  color: #fff;
+  color: #032114;
   font-weight: 600;
 }
 
@@ -336,15 +407,19 @@ button {
 
 .ghost-button {
   padding: 0.5rem 0.7rem;
-  background: #fff;
+  background: var(--surface-soft);
   border: 1px solid var(--border);
   color: var(--ink);
 }
 
+.ghost-button:hover:not(:disabled) {
+  background: #4b4d5c;
+}
+
 .panel {
-  border: 1px solid rgba(17, 24, 39, 0.08);
+  border: 1px solid var(--border);
   border-radius: 14px;
-  background: rgba(255, 255, 255, 0.68);
+  background: rgba(255, 255, 255, 0.02);
 }
 
 .upload-panel {
@@ -372,7 +447,7 @@ button {
   padding: 0.22rem 0.5rem;
   border: 1px solid var(--border);
   color: var(--muted);
-  background: #fff;
+  background: rgba(255, 255, 255, 0.04);
 }
 
 .upload-form {
@@ -380,11 +455,24 @@ button {
   gap: 0.55rem;
 }
 
+.upload-type-toggle {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.45rem;
+  margin-bottom: 0.55rem;
+}
+
+.upload-type-toggle .ghost-button.active {
+  border-color: rgba(25, 195, 125, 0.6);
+  background: rgba(25, 195, 125, 0.2);
+  color: #d1fae5;
+}
+
 .dropzone {
   position: relative;
-  border: 1px dashed #9ca3af;
+  border: 1px dashed #6b7280;
   border-radius: 12px;
-  background: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.03);
   padding: 0.7rem;
 }
 
@@ -413,11 +501,100 @@ button {
   color: var(--muted);
 }
 
+.url-form input {
+  width: 100%;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 0.55rem 0.65rem;
+  background: var(--surface-soft);
+  color: var(--ink);
+}
+
+.url-form input::placeholder {
+  color: var(--muted);
+}
+
+.controls-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  align-items: end;
+  padding: 0.35rem 0.4rem;
+  background: var(--surface-soft);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+}
+
+.control-group {
+  display: grid;
+  gap: 0.2rem;
+}
+
+.control-group span {
+  font-size: 0.74rem;
+  color: var(--muted);
+}
+
+.control-group select {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: #3d3f4d;
+  color: var(--ink);
+  padding: 0.45rem 0.55rem;
+}
+
+.stream-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.84rem;
+  padding: 0.35rem 0.55rem;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: #3d3f4d;
+}
+
+.export-actions {
+  margin-left: auto;
+  display: flex;
+  gap: 0.45rem;
+}
+
+.compare-strip {
+  border: 1px solid var(--border);
+  background: var(--surface-soft);
+  border-radius: 12px;
+  padding: 0.55rem 0.65rem;
+  display: grid;
+  gap: 0.45rem;
+}
+
+.compare-strip strong {
+  font-size: 0.82rem;
+}
+
+.compare-files {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.compare-files label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.25rem 0.45rem;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.04);
+  font-size: 0.78rem;
+}
+
 .primary-button {
   width: 100%;
   padding: 0.6rem 0.75rem;
-  background: #111827;
-  color: #fff;
+  background: var(--accent);
+  color: #032114;
 }
 
 .status-text {
@@ -476,6 +653,10 @@ button:disabled {
     min-height: calc(100vh - 220px);
   }
 
+  .chat-body {
+    grid-template-columns: 1fr;
+  }
+
   .quick-prompts {
     grid-template-columns: 1fr;
   }
@@ -489,5 +670,11 @@ button:disabled {
   .composer-footer button,
   .primary-button {
     width: 100%;
+  }
+
+  .export-actions {
+    margin-left: 0;
+    width: 100%;
+    flex-direction: column;
   }
 }

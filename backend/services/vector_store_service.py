@@ -1,6 +1,8 @@
 import json
 import logging
+from pathlib import Path
 from typing import List, Optional
+from urllib.parse import unquote
 
 from langchain_community.vectorstores import FAISS
 from langchain_core.documents import Document
@@ -178,8 +180,68 @@ class VectorStoreService:
         _VECTOR_STORE_CACHE = None
         _VECTOR_STORE_CACHE_SIGNATURE = None
 
-    def similarity_search(self, query: str, k: int = 4) -> List[Document]:
+    @staticmethod
+    def _source_matches(candidate: str | None, source_filter: str) -> bool:
+        if not candidate:
+            return False
+
+        wanted_full = unquote(str(source_filter)).replace("\\", "/").strip().lower()
+        wanted_name = Path(wanted_full).name
+        wanted_stem = Path(wanted_name).stem
+
+        candidate_full = unquote(str(candidate)).replace("\\", "/").strip().lower()
+        candidate_name = Path(candidate_full).name
+        candidate_stem = Path(candidate_name).stem
+
+        return (
+            wanted_full == candidate_full
+            or wanted_name == candidate_name
+            or wanted_stem == candidate_stem
+            or wanted_name in candidate_full
+            or candidate_name in wanted_full
+        )
+
+    def similarity_search(self, query: str, k: int = 4, source_filter: str | None = None) -> List[Document]:
         store = self.load()
         if not store:
             return []
+
+        if source_filter:
+            # FAISS metadata filtering is applied after vector retrieval, so a higher fetch_k
+            # is required to avoid missing chunks from the selected file.
+            filtered_docs = store.similarity_search(
+                query=query,
+                k=k,
+                filter={"source": source_filter},
+                fetch_k=max(100, k * 25),
+            )
+            if filtered_docs:
+                return filtered_docs
+
+            expanded_k = max(200, k * 50)
+            candidates = store.similarity_search(query=query, k=expanded_k)
+            filtered = [
+                doc for doc in candidates if self._source_matches(doc.metadata.get("source"), source_filter)
+            ]
+            if filtered:
+                return filtered[:k]
+
+            unique_sources = {
+                str(doc.metadata.get("source", "")).strip().lower()
+                for doc in candidates
+                if str(doc.metadata.get("source", "")).strip()
+            }
+            if len(unique_sources) == 1:
+                logger.warning(
+                    "Source filter '%s' did not match exactly, but index appears single-source. Using that source.",
+                    source_filter,
+                )
+                return candidates[:k]
+
+            logger.warning(
+                "No chunks matched source filter '%s'; returning empty result to avoid cross-file answers.",
+                source_filter,
+            )
+            return []
+
         return store.similarity_search(query=query, k=k)
