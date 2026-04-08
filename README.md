@@ -190,7 +190,7 @@ The latest UI flow includes:
 
 
 #### Streaming / Thinking State
-![Streaming State](docs/screenshots/3.png)
+![Streaming State](docs/screenshots/31.png)
 
 #### Result
 ![Result](docs/screenshots/4.png)
