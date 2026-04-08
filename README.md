@@ -7,7 +7,7 @@ with their content using a **Retrieval-Augmented Generation (RAG)** pipeline.
 ---
 ## 🚀 Features
 
-```
+
 - 📂 Upload and process multiple PDFs
 - 🔍 Semantic search using embeddings
 - 💬 Chat with document content
@@ -16,10 +16,9 @@ with their content using a **Retrieval-Augmented Generation (RAG)** pipeline.
 - 🔄 Reset index functionality
 - 🧩 Modular and scalable backend design
 
-```
+
 ---
 ## 🛠 Tech Stack
-```
 
 **Frontend**
 - React (Vite)
@@ -32,7 +31,6 @@ with their content using a **Retrieval-Augmented Generation (RAG)** pipeline.
 - SentenceTransformers (Embeddings)
 - FAISS (Vector Store)
 
-```
 ---
 
 ## 📁 Project Structure
