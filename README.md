@@ -193,7 +193,7 @@ The latest UI flow includes:
 ![Streaming State](docs/screenshots/3.png)
 
 #### Result
-![Result](docs/screenshots/2.png)
+![Result](docs/screenshots/4.png)
 
 ---
 
