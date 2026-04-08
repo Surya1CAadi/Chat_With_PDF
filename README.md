@@ -193,11 +193,3 @@ http://localhost:5173
 
 **Addy**
 
-```
-
----
-
-If you want next level 🚀:
-- I can make this **standout GitHub README (badges + screenshots + demo GIF)**
-- Or convert it into **resume-ready project description (TCS/placements level)**
-```
