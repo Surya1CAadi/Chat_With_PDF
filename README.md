@@ -182,7 +182,7 @@ The latest UI flow includes:
 
 
 
-```
+```md
 ![Chat Layout](docs/screenshots/chat-layout.png)
 ![Reply Actions](docs/screenshots/2.png)
 ![Pinned Composer](docs/screenshots/3.png)
