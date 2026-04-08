@@ -1,9 +1,9 @@
-Here is your **single complete `README.md` file** 👇 (ready to copy-paste directly):
 
-```markdown
+```
 # 📄 Chat with PDF (RAG-Based System)
 
-A full-stack application that allows users to upload one or multiple PDFs and interact with their content using a **Retrieval-Augmented Generation (RAG)** pipeline.
+A full-stack application that allows users to upload one or multiple PDFs and interact 
+with their content using a **Retrieval-Augmented Generation (RAG)** pipeline.
 
 ---
 
@@ -36,7 +36,6 @@ A full-stack application that allows users to upload one or multiple PDFs and in
 
 ## 📁 Project Structure
 
-```
 
 CHAT_PDF/
 │
