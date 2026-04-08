@@ -183,16 +183,17 @@ The latest UI flow includes:
 ### Screenshots
 
 #### Chat Layout
-![Chat Layout](docs/screenshots/chat-layout.png)
+![Chat Layout](docs/screenshots/1.png)
 
-#### Conversation + Inline Actions
-![Conversation View](docs/screenshots/2.png)
+#### Empty / Quick Prompt State
+![Empty State](docs/screenshots/2.png)
+
 
 #### Streaming / Thinking State
 ![Streaming State](docs/screenshots/3.png)
 
-#### Empty / Quick Prompt State
-![Empty State](docs/screenshots/Screenshot%202026-04-08%20221757.png)
+#### Result
+![Result](docs/screenshots/2.png)
 
 ---
 
