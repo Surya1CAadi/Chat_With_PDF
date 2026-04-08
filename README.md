@@ -185,5 +185,5 @@ http://localhost:5173
 
 ## 🧑‍💻 Author
 
-**Addy**
+**Aditya Maurya**
 
