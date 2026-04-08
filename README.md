@@ -1,14 +1,13 @@
 
-```
-# 📄 Chat with PDF (RAG-Based System)
+## 📄 Chat with PDF (RAG-Based System)
 
 A full-stack application that allows users to upload one or multiple PDFs and interact 
 with their content using a **Retrieval-Augmented Generation (RAG)** pipeline.
 
 ---
-
 ## 🚀 Features
 
+```
 - 📂 Upload and process multiple PDFs
 - 🔍 Semantic search using embeddings
 - 💬 Chat with document content
@@ -17,9 +16,10 @@ with their content using a **Retrieval-Augmented Generation (RAG)** pipeline.
 - 🔄 Reset index functionality
 - 🧩 Modular and scalable backend design
 
+```
 ---
-
 ## 🛠 Tech Stack
+```
 
 **Frontend**
 - React (Vite)
@@ -32,10 +32,11 @@ with their content using a **Retrieval-Augmented Generation (RAG)** pipeline.
 - SentenceTransformers (Embeddings)
 - FAISS (Vector Store)
 
+```
 ---
 
 ## 📁 Project Structure
-
+```
 
 CHAT_PDF/
 │
@@ -69,49 +70,44 @@ CHAT_PDF/
 │
 └── README.md
 
-````
-
+```
 ---
 
 ## ⚙️ Backend Setup
 
-```bash
+```
 cd backend
 python -m venv .venv
 .venv\Scripts\activate   # Windows
 pip install -r requirements.txt
 copy .env.example .env
-````
+
 
 Update `.env`:
 
-```env
 OLLAMA_BASE_URL=http://localhost:11434
-```
+
 
 Pull model:
 
-```bash
 ollama pull llama3.2:1b
-```
+
 
 Run backend:
 
-```bash
 uvicorn main:app --reload --port 8000
-```
 
+```
 ---
 
 ## ⚙️ Backend Configuration
 
-```env
+```
 INDEX_VERSION=1
 EMBEDDING_MODEL=sentence-transformers/all-MiniLM-L6-v2
 CHAT_MODEL=llama3.2:1b
 OLLAMA_BASE_URL=http://localhost:11434
 ```
-
 ---
 
 ## 🔌 API Endpoints
@@ -127,16 +123,14 @@ OLLAMA_BASE_URL=http://localhost:11434
 
 ## 🎨 Frontend Setup
 
-```bash
+```
 cd frontend
 npm install
 copy .env.example .env
 npm run dev
-```
 
 App URL:
 
-```
 http://localhost:5173
 ```
 
