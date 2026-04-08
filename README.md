@@ -180,13 +180,19 @@ The latest UI flow includes:
 	- Composer remains at the bottom of the chat viewport
 	- Mode selector placed near the send action
 
+### Screenshots
 
-
-```md
+#### Chat Layout
 ![Chat Layout](docs/screenshots/chat-layout.png)
-![Reply Actions](docs/screenshots/2.png)
-![Pinned Composer](docs/screenshots/3.png)
-```
+
+#### Conversation + Inline Actions
+![Conversation View](docs/screenshots/2.png)
+
+#### Streaming / Thinking State
+![Streaming State](docs/screenshots/3.png)
+
+#### Empty / Quick Prompt State
+![Empty State](docs/screenshots/Screenshot%202026-04-08%20221757.png)
 
 ---
 
