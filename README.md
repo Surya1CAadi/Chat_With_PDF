@@ -197,7 +197,7 @@ The latest UI flow includes:
 
 ### Demo Video
 
-[Watch Demo (v1)](docs/demo/v1.mp4)
+[Watch Demo ](https://youtu.be/k91vl1IZ8qs)
 
 ---
 
