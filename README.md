@@ -154,6 +154,39 @@ http://localhost:5173
 * Session-based chat history
 * Index versioning
 * Provider info in response
+* Streaming answer rendering
+* Inline reply actions: copy + PDF export
+
+---
+
+## 🖼 UI Walkthrough (Current)
+
+The latest UI flow includes:
+
+1. Left sidebar for upload and file selection
+	- Upload source toggle: `PDF` or `URL / Drive`
+	- Single `Upload & Index` action
+	- Session file list with active file highlight
+
+2. Main chat area
+	- Active file context in header (`Asking: <file>.pdf`)
+	- Quick prompts in empty state
+	- Streaming assistant responses
+	- Per-reply actions under assistant messages:
+	  - `Copy Reply`
+	  - `Download PDF`
+
+3. Bottom-pinned composer
+	- Composer remains at the bottom of the chat viewport
+	- Mode selector placed near the send action
+
+
+
+```
+![Chat Layout](docs/screenshots/chat-layout.png)
+![Reply Actions](docs/screenshots/2.png)
+![Pinned Composer](docs/screenshots/3.png)
+```
 
 ---
 
