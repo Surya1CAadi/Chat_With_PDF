@@ -195,6 +195,10 @@ The latest UI flow includes:
 #### Result
 ![Result](docs/screenshots/4.png)
 
+### Demo Video
+
+[Watch Demo (v1)](docs/demo/v1.mp4)
+
 ---
 
 ## 📦 Storage
