@@ -7,8 +7,19 @@ function App() {
   const [activeFile, setActiveFile] = useState(null);
 
   function handleUploadComplete(uploadInfo) {
-    setUploadedFiles((prev) => [uploadInfo.filename, ...prev]);
-    setActiveFile(uploadInfo.filename);
+    const names = uploadInfo.filenames?.length ? uploadInfo.filenames : [uploadInfo.filename];
+    setUploadedFiles((prev) => {
+      const next = [...prev];
+      names.forEach((name) => {
+        if (!next.includes(name)) {
+          next.unshift(name);
+        }
+      });
+      return next;
+    });
+    if (names[0]) {
+      setActiveFile(names[0]);
+    }
   }
 
   return (

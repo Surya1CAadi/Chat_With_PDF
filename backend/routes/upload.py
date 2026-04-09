@@ -1,6 +1,7 @@
 from pathlib import Path
 from urllib.parse import parse_qs, urlparse
 from urllib.request import Request, urlopen
+from typing import List
 
 from fastapi import APIRouter, File, HTTPException, UploadFile
 
@@ -50,27 +51,46 @@ def _download_pdf(url: str) -> tuple[bytes, str]:
 
 
 @router.post("/upload", response_model=UploadResponse)
-async def upload_pdf(file: UploadFile = File(...)) -> UploadResponse:
-    if not file.filename or not file.filename.lower().endswith(".pdf"):
-        raise HTTPException(status_code=400, detail="Only PDF files are supported.")
+async def upload_pdf(files: List[UploadFile] = File(...)) -> UploadResponse:
+    if not files:
+        raise HTTPException(status_code=400, detail="Please upload at least one PDF file.")
 
     try:
-        safe_name = Path(file.filename).name
-        save_path = UPLOADS_DIR / safe_name
+        all_docs = []
+        uploaded_names: List[str] = []
+        for file in files:
+            if not file.filename or not file.filename.lower().endswith(".pdf"):
+                raise HTTPException(status_code=400, detail="Only PDF files are supported.")
 
-        with open(save_path, "wb") as out_file:
-            out_file.write(await file.read())
+            safe_name = Path(file.filename).name
+            save_path = UPLOADS_DIR / safe_name
 
-        docs = extract_pdf_documents(save_path, source_name=safe_name)
-        if not docs:
-            raise HTTPException(status_code=400, detail="No extractable text found in PDF.")
+            with open(save_path, "wb") as out_file:
+                out_file.write(await file.read())
+
+            docs = extract_pdf_documents(save_path, source_name=safe_name)
+            if not docs:
+                raise HTTPException(status_code=400, detail=f"No extractable text found in PDF: {safe_name}")
+
+            all_docs.extend(docs)
+            uploaded_names.append(safe_name)
+
+        if not all_docs:
+            raise HTTPException(status_code=400, detail="No extractable text found in uploaded PDFs.")
 
         vector_store = VectorStoreService()
-        chunks_added = vector_store.add_documents(docs)
+        chunks_added = vector_store.add_documents(all_docs)
+
+        display_name = uploaded_names[0]
+        message = "PDF processed and indexed successfully."
+        if len(uploaded_names) > 1:
+            message = f"{len(uploaded_names)} PDFs processed and indexed successfully."
 
         return UploadResponse(
-            message="PDF processed and indexed successfully.",
-            filename=safe_name,
+            message=message,
+            filename=display_name,
+            filenames=uploaded_names,
+            total_files_uploaded=len(uploaded_names),
             total_chunks_added=chunks_added,
         )
     except HTTPException:

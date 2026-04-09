@@ -6,6 +6,8 @@ from pydantic import BaseModel, Field
 class UploadResponse(BaseModel):
     message: str
     filename: str
+    filenames: Optional[List[str]] = None
+    total_files_uploaded: Optional[int] = None
     total_chunks_added: int
 
 

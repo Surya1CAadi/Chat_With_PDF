@@ -1,8 +1,11 @@
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000';
 
-export async function uploadPdf(file) {
+export async function uploadPdf(files) {
   const formData = new FormData();
-  formData.append('file', file);
+  const list = Array.isArray(files) ? files : [files];
+  list.forEach((file) => {
+    formData.append('files', file);
+  });
 
   const response = await fetch(`${API_BASE_URL}/upload`, {
     method: 'POST',

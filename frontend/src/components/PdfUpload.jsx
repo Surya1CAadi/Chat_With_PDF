@@ -3,7 +3,7 @@ import { uploadPdf, uploadPdfFromUrl } from '../api';
 
 function PdfUpload({ onUploadComplete }) {
   const [uploadType, setUploadType] = useState('file');
-  const [file, setFile] = useState(null);
+  const [files, setFiles] = useState([]);
   const [urlInput, setUrlInput] = useState('');
   const [isUploading, setIsUploading] = useState(false);
   const [message, setMessage] = useState('');
@@ -15,13 +15,13 @@ function PdfUpload({ onUploadComplete }) {
       let result;
 
       if (uploadType === 'file') {
-        if (!file) {
-          setMessage('Please choose a PDF file first.');
+        if (!files.length) {
+          setMessage('Please choose at least one PDF file first.');
           return;
         }
         setMessage('Uploading and indexing...');
-        result = await uploadPdf(file);
-        setFile(null);
+        result = await uploadPdf(files);
+        setFiles([]);
         event.target.reset();
       } else {
         const trimmedUrl = urlInput.trim();
@@ -34,7 +34,12 @@ function PdfUpload({ onUploadComplete }) {
         setUrlInput('');
       }
 
-      setMessage(`${result.filename} indexed (${result.total_chunks_added} chunks).`);
+      const uploadedCount = result.total_files_uploaded || (result.filenames?.length ?? 1);
+      if (uploadedCount > 1) {
+        setMessage(`${uploadedCount} PDFs indexed (${result.total_chunks_added} chunks).`);
+      } else {
+        setMessage(`${result.filename} indexed (${result.total_chunks_added} chunks).`);
+      }
       onUploadComplete?.(result);
     } catch (error) {
       setMessage(error.message);
@@ -75,12 +80,19 @@ function PdfUpload({ onUploadComplete }) {
             <input
               type="file"
               accept="application/pdf"
-              onChange={(e) => setFile(e.target.files?.[0] || null)}
+              multiple
+              onChange={(e) => setFiles(Array.from(e.target.files || []))}
               disabled={isUploading}
             />
             <div className="dropzone-copy">
-              <strong>{file ? file.name : 'Choose a PDF to index'}</strong>
-              <span>{file ? 'Ready to upload' : 'Click to browse or drag a file into the picker'}</span>
+              <strong>
+                {files.length === 0
+                  ? 'Choose PDF files to index'
+                  : files.length === 1
+                    ? files[0].name
+                    : `${files.length} files selected`}
+              </strong>
+              <span>{files.length > 0 ? 'Ready to upload' : 'Click to browse or drag files into the picker'}</span>
             </div>
           </label>
         ) : (
@@ -97,7 +109,7 @@ function PdfUpload({ onUploadComplete }) {
 
         <button
           type="submit"
-          disabled={isUploading || (uploadType === 'file' ? !file : !urlInput.trim())}
+          disabled={isUploading || (uploadType === 'file' ? files.length === 0 : !urlInput.trim())}
           className="primary-button"
         >
           {isUploading ? 'Processing...' : 'Upload & Index'}
